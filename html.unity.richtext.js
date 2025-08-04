@@ -298,7 +298,7 @@ class RichTextEditor {
             .replace(/&/g, '&amp;');
     }
     
-    static create(selector) {
-        return new RichTextEditor(selector);
+    static create(selector, previewSelector, options = null) {
+        return new RichTextEditor(selector , previewSelector, options);
     } 
 }
