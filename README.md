@@ -13,6 +13,7 @@ Enables direct editing of in-game rich text content (emails, announcements, etc.
 - `<color=#EA1A1A>text</color>` → Text color  
 - `<i>text</i>` → Italic  
 - `<b>text</b>` → Bold  
+- `<u>Text</u>` → Underlines text 
 - `<link=URL>text</link>` → Hyperlink  
 - `$img:imageURL` → Image (must be standalone line)
 
@@ -20,7 +21,7 @@ Enables direct editing of in-game rich text content (emails, announcements, etc.
 ```html  
 <script src="./html.unity.richtext.js"></script>   
 <script>  
-new RichTextEditor('#myTextarea','#previewContainer');  
+new HURichTextEditor('#myTextarea','#previewContainer');  
 </script>  
 ```
 
@@ -40,5 +41,6 @@ new RichTextEditor('#myTextarea','#previewContainer');
 - `<color=#EA1A1A>文字</color>` → 颜色  
 - `<i>文字</i>` → 斜体  
 - `<b>文字</b>` → 加粗  
+- `<u>文字</u>` → 下划线
 - `<link=网址>文字</link>` → 链接  
 - `$img:图片URL` → 图片（需独占一行）

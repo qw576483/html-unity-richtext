@@ -1,4 +1,4 @@
-class RichTextEditor {
+class HURichTextEditor {
     constructor(selector, previewSelector, options = null) {
         this.textarea  = document.querySelector(selector); 
         if (!this.textarea)  throw new Error('textarea not found');
@@ -17,6 +17,7 @@ class RichTextEditor {
             },
             bold: { open: '<b>', close: '</b>' },
             italic: { open: '<i>', close: '</i>' },
+            underline: { open: '<u>', close: '</u>'},
             size: { 
                 open: (v) => `<size=${v}>`, 
                 close: '</size>',
@@ -135,6 +136,7 @@ class RichTextEditor {
         const buttons = [
             { icon: '🎨', text: 'color', method: 'applyColor', class: 'rtbtn-dark' },
             { icon: '𝐁', text: 'bold', method: 'applyBold', class: 'rtbtn-dark' },
+            { icon: 'U̲', text: 'underline', method: 'applyUnderline', class: 'rtbtn-dark' },
             { icon: '𝐼', text: 'italic', method: 'applyItalic', class: 'rtbtn-dark' },
             { icon: '🔠', text: 'size', method: 'applyFontSize', class: 'rtbtn-dark' },
             { icon: '🔗', text: 'link', method: 'applyLink', class: 'rtbtn-dark' },
@@ -211,6 +213,7 @@ class RichTextEditor {
     }
     
     applyBold = () => this.applyStyle('bold'); 
+    applyUnderline = () => this.applyStyle('underline'); 
     applyItalic = () => this.applyStyle('italic'); 
     
     applyFontSize() {
@@ -244,7 +247,7 @@ class RichTextEditor {
         const isFullText = (start === end);
         const targetText = isFullText ? fullText : fullText.substring(start,  end);
         const cleanedText = targetText 
-            .replace(/<\/?(color|b|i|size|link|strong|em|span)[^>]*>/g, '')
+            .replace(/<\/?(color|b|i|u|size|link|strong|em|span)[^>]*>/g, '')
             .replace(/^\s*\$img:[^\n]+\s*$/gm, '')
             .replace(/&nbsp;/g, ' ')
             .replace(/&lt;/g, '<')
@@ -279,6 +282,7 @@ class RichTextEditor {
                 .replace(/\r?\n/g, '<br>')
                 .replace(/  /g, '&nbsp;&nbsp;')
                 .replace(/<b>/g, '<strong>').replace(/<\/b>/g, '</strong>')
+                .replace(/<u>/g, '<span style="text-decoration:underline">').replace(/<\/u>/g, '</span>')
                 .replace(/<i>/g, '<em>').replace(/<\/i>/g, '</em>')
                 .replace(/<size=([\d.]+)(%?)\>/g, (_, size, unit) => {
                     const pxSize = unit ? `${parseFloat(size)/5}px` : `${size}px`;
@@ -299,6 +303,6 @@ class RichTextEditor {
     }
     
     static create(selector, previewSelector, options = null) {
-        return new RichTextEditor(selector , previewSelector, options);
+        return new HURichTextEditor(selector , previewSelector, options);
     } 
 }
