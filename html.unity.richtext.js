@@ -5,7 +5,6 @@ class RichTextEditor {
         
         this.preview  = document.querySelector(previewSelector)  || this._createPreviewElement();
         this.preview.className  = 'rich-text-preview';
-        // this.textarea.parentNode.insertBefore(this.preview,  this.textarea.nextSibling); 
         
         this.toolbar  = this._createToolbar();
         this._renderToolbarButtons();
@@ -78,7 +77,6 @@ class RichTextEditor {
                 border-radius: 4px 4px 0 0;
                 margin-bottom: -1px;
             }
-        
 
             .rtbtn {
                 min-width: 60px;
@@ -89,7 +87,6 @@ class RichTextEditor {
                 transition: all 0.2s;
                 font-size: 14px;
             }
-        
 
             .rtbtn-sm {
                 padding: 3px 6px;
@@ -176,10 +173,10 @@ class RichTextEditor {
             return;
         }
         const currentTag = {
-        ...this.TAG_CONFIG[styleType],
-        open: typeof this.TAG_CONFIG[styleType].open === 'function' 
-            ? this.TAG_CONFIG[styleType].open(value) 
-            : this.TAG_CONFIG[styleType].open 
+            ...this.TAG_CONFIG[styleType],
+            open: typeof this.TAG_CONFIG[styleType].open === 'function' 
+                ? this.TAG_CONFIG[styleType].open(value) 
+                : this.TAG_CONFIG[styleType].open 
         };
         let processedText = selectedText;
         if (currentTag.isBlock)  {
@@ -187,10 +184,10 @@ class RichTextEditor {
             ? selectedText.replace(new  RegExp(this.escapeRegExp(currentTag.open),  'g'), '')
             : `${currentTag.open}${selectedText}`; 
         } else {
-        const regex = new RegExp(`${this.escapeRegExp(currentTag.open)}(.*?)${this.escapeRegExp(currentTag.close)}`,  's');
-        processedText = regex.test(selectedText)  
-            ? selectedText.replace(regex,  '$1')
-            : `${currentTag.open}${selectedText}${currentTag.close}`; 
+            const regex = new RegExp(`${this.escapeRegExp(currentTag.open)}(.*?)${this.escapeRegExp(currentTag.close)}`,  's');
+            processedText = regex.test(selectedText)  
+                ? selectedText.replace(regex,  '$1')
+                : `${currentTag.open}${selectedText}${currentTag.close}`; 
         }
         this.textarea.value  = beforeText + processedText + afterText;
         const lengthDiff = processedText.length  - selectedText.length; 
@@ -247,42 +244,58 @@ class RichTextEditor {
         const isFullText = (start === end);
         const targetText = isFullText ? fullText : fullText.substring(start,  end);
         const cleanedText = targetText 
-        .replace(/<\/?(color|b|i|size|link|strong|em|span)[^>]*>/g, '')
-        .replace(/^\s*\$img:[^\n]+\s*$/gm, '')
-        .replace(/&nbsp;/g, ' ')
-        .replace(/&lt;/g, '<')
-        .replace(/&gt;/g, '>');
+            .replace(/<\/?(color|b|i|size|link|strong|em|span)[^>]*>/g, '')
+            .replace(/^\s*\$img:[^\n]+\s*$/gm, '')
+            .replace(/&nbsp;/g, ' ')
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>');
         this.textarea.value  = isFullText 
-        ? cleanedText 
-        : fullText.substring(0,  start) + cleanedText + fullText.substring(end); 
+            ? cleanedText 
+            : fullText.substring(0,  start) + cleanedText + fullText.substring(end); 
         if (!isFullText) {
-        const lengthDiff = cleanedText.length  - (end - start);
-        end = start + cleanedText.length; 
-        this.selectTextRange(this.textarea,  start, end);
+            // const lengthDiff = cleanedText.length  - (end - start);
+            end = start + cleanedText.length; 
+            this.selectTextRange(this.textarea,  start, end);
         }
         this.updateOutput(); 
     }
     
     updateOutput() {
-        const inputText = this.textarea.value; 
         const outputText = this.preview; 
-        let htmlText = inputText 
-        .replace(/\r?\n/g, '<br>')
-        .replace(/  /g, '&nbsp;')
-        .replace(/<b>/g, '<strong>').replace(/<\/b>/g, '</strong>')
-        .replace(/<i>/g, '<em>').replace(/<\/i>/g, '</em>')
-        .replace(/<size=([\d.]+)(%?)\>/g, (_, size, unit) => {
-            const pxSize = unit ? `${parseFloat(size)/5}px` : `${size}px`;
-            return `<span style="font-size:${pxSize}">`;
-        })
-        .replace(/<\/size>/g, '</span>')
-        .replace(/<color=(#[0-9a-fA-F]{6}|[a-zA-Z]+)\>/g, '<span style="color:$1">')
-        .replace(/<\/color>/g, '</span>')
-        .replace(/<link=([^>]+)>([^<]+)<\/link>/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$2</a>')
-        .replace(/^\s*\$img:\s*([^\s]+)\s*$/gm, (match, url) => {
-            return `<div class="rich-text-img"><img src="${url.trim()}"  onerror="this.onerror=null;this.parentElement.classList.add('error')"  onload="this.parentElement.classList.remove('loading')"></div>`; 
-        });
+
+        let htmlText = this.textarea.value 
+            .split('\n')
+            .map(line => {
+                if (line.trim().startsWith('$img:'))  {
+                        const url = line.substring(5).trim() 
+                        .replace(/&/g, '&amp;')
+                        .replace(/</g, '&lt;');
+                        return `<img src="${url}" style="max-width:100%;height:auto;display:block">`;
+                    }
+                    return line;
+                })
+                .join('\n')
+                .replace(/<link=([^>]+)>([^<]+)<\/link>/g, '<a href="$1" target="_blank" style="text-decoration:underline">$2</a>')
+                .replace(/\r?\n/g, '<br>')
+                .replace(/  /g, '&nbsp;&nbsp;')
+                .replace(/<b>/g, '<strong>').replace(/<\/b>/g, '</strong>')
+                .replace(/<i>/g, '<em>').replace(/<\/i>/g, '</em>')
+                .replace(/<size=([\d.]+)(%?)\>/g, (_, size, unit) => {
+                    const pxSize = unit ? `${parseFloat(size)/5}px` : `${size}px`;
+                    return `<span style="font-size:${pxSize}">`;
+                })
+                .replace(/<\/size>/g, '</span>')
+                .replace(/<color=(#[0-9a-fA-F]{6}|[a-zA-Z]+)\>/g, '<span style="color:$1">')
+                .replace(/<\/color>/g, '</span>');
+
         outputText.innerHTML  = htmlText;
+    }
+
+
+    _sanitizeURL(url) {
+        return String(url)
+            .replace(/[^a-z0-9-._~:/?#[\]@!$&'()*+,;=]/gi, '')
+            .replace(/&/g, '&amp;');
     }
     
     static create(selector) {

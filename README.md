@@ -8,6 +8,14 @@ Enables direct editing of in-game rich text content (emails, announcements, etc.
 - **Live Preview**: Real-time HTML rendering as you type  
 - **Extensible**: Add custom tags and validators  
 - **Responsive**: Works on both desktop and mobile browsers  
+## Quick Reference 
+- `<size=18>text</size>` → Font size  
+- `<color=#EA1A1A>text</color>` → Text color  
+- `<i>text</i>` → Italic  
+- `<b>text</b>` → Bold  
+- `<link=URL>text</link>` → Hyperlink  
+- `$img:imageURL` → Image (must be standalone line)
+
 ## Quick Start  
 ```html  
 <script src="./html.unity.richtext.js"></script>   
@@ -26,3 +34,11 @@ new RichTextEditor('#myTextarea','#previewContainer');
 - **实时可视化预览**：输入时同步渲染HTML效果，所见即所得  
 - **可扩展架构**：允许开发者自定义标签和验证规则  
 - **全端适配**：完美兼容桌面浏览器和移动设备  
+
+## 语法速查
+- `<size=18>文字</size>` → 字号  
+- `<color=#EA1A1A>文字</color>` → 颜色  
+- `<i>文字</i>` → 斜体  
+- `<b>文字</b>` → 加粗  
+- `<link=网址>文字</link>` → 链接  
+- `$img:图片URL` → 图片（需独占一行）
