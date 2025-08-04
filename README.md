@@ -3,7 +3,7 @@ A lightweight rich text editor that bridges HTML formatting with Unity-style mar
 
 ![Demo](demo/demo.gif)   
 ## Features  
-- **Unity-like Syntax**: Use Unity-style markup (e.g. `<color=#ff0000>`) that gets converted to HTML ,
+- **Unity-like Syntax**: Use Unity-style markup that gets converted to HTML ,
 Enables direct editing of in-game rich text content (emails, announcements, etc.) within Unity environments.
 - **Live Preview**: Real-time HTML rendering as you type  
 - **Extensible**: Add custom tags and validators  
@@ -31,7 +31,7 @@ new HURichTextEditor('#myTextarea','#previewContainer');
 实现Unity标记语法与HTML格式无缝转换的富文本编辑工具
  
 ## 核心特性  
-- **Unity风格语法**：支持`<color=#ff0000>`等Unity原生标记，自动转换为标准HTML ，可以直接编辑unity游戏中邮件，公告等富文本内容  
+- **Unity风格语法**：支持Unity原生标记，自动转换为标准HTML ，可以直接编辑unity游戏中邮件，公告等富文本内容  
 - **实时可视化预览**：输入时同步渲染HTML效果，所见即所得  
 - **可扩展架构**：允许开发者自定义标签和验证规则  
 - **全端适配**：完美兼容桌面浏览器和移动设备  
