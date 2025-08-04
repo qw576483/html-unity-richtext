@@ -5,7 +5,7 @@ class RichTextEditor {
         
         this.preview  = document.querySelector(previewSelector)  || this._createPreviewElement();
         this.preview.className  = 'rich-text-preview';
-        this.textarea.parentNode.insertBefore(this.preview,  this.textarea.nextSibling); 
+        // this.textarea.parentNode.insertBefore(this.preview,  this.textarea.nextSibling); 
         
         this.toolbar  = this._createToolbar();
         this._renderToolbarButtons();
