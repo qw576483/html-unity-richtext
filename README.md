@@ -1,7 +1,7 @@
 # HTML-Unity-RichText  
 A lightweight rich text editor that bridges HTML formatting with Unity-style markup syntax. 
 
-![Demo](demo/demo.mp4)   
+![Demo](demo/demo.gif)   
 ## Features  
 - **Unity-like Syntax**: Use Unity-style markup (e.g. `<color=#ff0000>`) that gets converted to HTML ,
 Enables direct editing of in-game rich text content (emails, announcements, etc.) within Unity environments.
