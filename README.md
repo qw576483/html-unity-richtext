@@ -12,8 +12,7 @@ Enables direct editing of in-game rich text content (emails, announcements, etc.
 ```html  
 <script src="./html.unity.richtext.js"></script>   
 <script>  
-const editor=new RichTextEditor('#myTextarea','#previewContainer');  
-editor.applyBold();editor.clearAllFormat();   
+new RichTextEditor('#myTextarea','#previewContainer');  
 </script>  
 ```
 
